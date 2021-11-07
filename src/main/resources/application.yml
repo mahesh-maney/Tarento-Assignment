@@ -1,0 +1,43 @@
+micronaut:
+  application:
+    name: assignment
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      redoc:
+        paths: classpath:META-INF/swagger/views/redoc
+        mapping: /redoc/**
+      rapidoc:
+        paths: classpath:META-INF/swagger/views/rapidoc
+        mapping: /rapidoc/**
+      swagger-ui:
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /swagger-ui/**
+  server:
+    ssl:
+      build-self-signed: true
+    netty:
+      use-native-transport: true
+      access-logger:
+        enabled: true
+  security:
+    enabled: false
+    authentication-provider-strategy: any
+    basic-auth:
+      enabled: false
+    intercept-url-map:
+      - pattern: /swagger/**
+        access:
+          - isAnonymous()
+      - pattern: /swagger-ui/**
+        access:
+          - isAnonymous()
+kafka:
+  bootstrap:
+    servers: localhost:9092
+  executors:
+    io:
+      n-threads: 10
+      type: fixed
